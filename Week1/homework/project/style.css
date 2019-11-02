@@ -1,0 +1,39 @@
+.alert-error {
+    color: red;
+}
+body {
+    font-family: 'Roboto';
+}
+
+#header {
+    display: flex;
+    flex-direction: column;
+}
+
+#image {
+    width: 30%;
+    height: 350px;
+    margin-left: 35%;
+}
+
+h4 {
+    background: #3F51B5;
+    width: 50%;
+    height: 2em;
+    color: white;
+    padding-top: 20px;
+    padding-left: 10px;
+    margin-left: 22.5%;
+    
+}
+ul {
+    margin-left: 20%;
+    display: flex;
+    flex-direction: column;
+}
+.list-items {
+    box-shadow: -3px 3px 6px lightgray;
+    width: 61%;
+    list-style-type: none;
+    padding: 10px 20px;
+}
