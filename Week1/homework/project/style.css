@@ -12,8 +12,9 @@ body {
 
 #image {
     width: 30%;
-    height: 350px;
+    height: 30%;
     margin-left: 35%;
+    background-size: cover;
 }
 
 h4 {
