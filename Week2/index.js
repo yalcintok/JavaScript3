@@ -3,10 +3,19 @@
 {
   function fetchJSON(url, cb) {
     fetch(url)
-      .then(response => response.json())
+      .then(response => {
+        if(response.status < 200 || response.status > 300)
+          {
+            const err = new Error();
+            err.message = response.status;
+            throw err;
+          }
+          return response.json()})
       .then(json => cb(null, json))
       .catch(err => cb(err));
   }
+
+  
 
   let receivedRepos;
   let currentRepo;
