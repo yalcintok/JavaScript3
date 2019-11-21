@@ -2,8 +2,8 @@
 
 {
   async function fetchJSON(url, cb) {
-   const response =  await axios.get(url);
    try {
+    const response =  await axios.get(url);
     if (response.status < 200 || response.status > 300) {
       return new Error(`Error: ${response.status}`);
     } else {
@@ -73,20 +73,19 @@
     addRepoInformation('Updated:', arrangeDate(repo.updated_at), repoEls);
   }
 
-  function appendContributor() {
-    fetchJSON(currentRepo.contributors_url)
-      .then(data => {
-        createAndAppend('h5', contributorField, {text: 'Contributions'});
-        data.forEach(contr => addRepoContributors(contr, contributorField));
-      })
-      .catch(err => {
-        console.log(err);
-          return;
-      })
-  };
+  async function appendContributor() {
+    try {
+      const contributorData = await fetchJSON(currentRepo.contributors_url)
+      createAndAppend('h5', contributorField, {text: 'Contributions'});
+      contributorData.forEach(contr => addRepoContributors(contr, contributorField));   
+     }
+    catch (err) {
+      console.error(err);
+    }
+  }
 
-  function main(url) {
-    fetchJSON(url) 
+  async function main(url) {
+    await fetchJSON(url) 
       .then(repos => {
         
         let head = document.querySelector('.head');
@@ -95,14 +94,12 @@
         receivedRepos = repos.sort((a, b) => a.name.localeCompare(b.name));
         receivedRepos.forEach(repo => renderRepoDetails(repo, repoField));
         select.addEventListener('change', function(event) {
-          console.log(event.target.value);
           for (let i = 0; i < receivedRepos.length; i++) {
             if (event.target.value == receivedRepos[i].id) {
               currentRepo = receivedRepos[i];
               break;
             }
           }
-          console.log(currentRepo);
           contributorField.innerHTML = '';
           appendContributor();
           repoField.innerHTML = '';
